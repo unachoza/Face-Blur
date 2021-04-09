@@ -5,4 +5,12 @@
   flex-wrap: wrap;
   justify-content: center;
   cursor: pointer;
+  backdrop-filter: blur(20px);
+  filter: blur(4px);
+}
+.image-container {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
 }

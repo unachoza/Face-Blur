@@ -1,7 +1,9 @@
 button {
   color: white;
   background-color: #259ca1;
-  font-size: 80px;
+  width: 20%;
+  font-size: 25px;
+  font-weight: 500;
   border: none;
   border-radius: 2px;
 }
@@ -13,10 +15,9 @@ button {
   width: 85%;
 }
 .centerTop {
-  height: 100vh;
+  height: 60vh;
+  padding: 100px;
   width: 100vw;
-  display: flex;
-  justify-content: center;
 }
 .form {
   background: rgba(0, 0, 0, 0.3);
@@ -27,6 +28,7 @@ button {
 input {
   border-radius: 2px;
   border: none;
+  height: 40px;
 }
 button:hover {
   transform: translateY(-3px);

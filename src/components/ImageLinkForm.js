@@ -9,7 +9,7 @@ const ImageLinkForm = ({ onInputChange, onSubmit }) => {
         <input className="f4 pa2  w-70 center" type="tex" onChange={onInputChange} autoComplete="none" />
         <br />
         <button style={{ 'font-size': '25px' }} onClick={onSubmit}>
-          Detect
+          Upload
         </button>
       </div>
     </div>

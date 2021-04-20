@@ -1,7 +1,7 @@
 import React from 'react';
 import '../CSS/FaceRecognition.css';
+
 const FaceRecognition = ({ img, box }) => {
-  console.log(img);
   return (
     <div className="image-container">
       <div className="absolute mt2">

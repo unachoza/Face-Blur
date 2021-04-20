@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import './CSS/App.css';
 import Clarifai from 'clarifai';
-import Navagation from './components/Navigation';
 import ImageLinkForm from './components/ImageLinkForm';
-import Logo from './components/Logo';
-import User from './components/User';
 import FaceRecognition from './components/FaceRecognition';
-import Signin from './components/Signin';
-import Particles from 'react-particles-js';
 import 'tachyons';
 
 const app = new Clarifai.App({
@@ -27,17 +22,21 @@ const App = () => {
   const onSubmit = async () => {
     setImg(input);
     const response = await app.models.predict(Clarifai.FACE_DETECT_MODEL, input);
-    const data = response.outputs[0].data.regions[0].region_info.bounding_box;
-    displayFaceBox(calculateFaceBox(data));
+    let data = response.outputs[0].data.regions;
+    if (data.length > 1) {
+      data.forEach((face) => {
+        displayFaceBox(calculateFaceBox(face.region_info.bounding_box));
+      });
+    } else {
+      data = data[0].region_info.bounding_box;
+      displayFaceBox(calculateFaceBox(data));
+    }
   };
 
   const calculateFaceBox = (data) => {
-    console.log(data);
     const clarifaiFace = document.getElementById('imageInput');
-    console.log(clarifaiFace);
     const width = Number(clarifaiFace.width);
     const height = Number(clarifaiFace.height);
-    console.log(width, height);
     return {
       leftCol: data.left_col * width,
       topRow: data.top_row * height,
@@ -46,7 +45,6 @@ const App = () => {
     };
   };
   const displayFaceBox = (box) => {
-    console.log(box);
     setBox(box);
   };
   return (

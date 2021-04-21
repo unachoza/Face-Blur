@@ -10,7 +10,7 @@ const app = new Clarifai.App({
 });
 
 const App = () => {
-  const [box, setBox] = useState({});
+  const [boxes, setBoxes] = useState([]);
   const [input, setInput] = useState('');
   const [img, setImg] = useState('');
 
@@ -22,36 +22,32 @@ const App = () => {
   const onSubmit = async () => {
     setImg(input);
     const response = await app.models.predict(Clarifai.FACE_DETECT_MODEL, input);
-    let data = response.outputs[0].data.regions;
-    if (data.length > 1) {
-      data.forEach((face) => {
-        displayFaceBox(calculateFaceBox(face.region_info.bounding_box));
-      });
-    } else {
-      data = data[0].region_info.bounding_box;
-      displayFaceBox(calculateFaceBox(data));
-    }
+    displayFaceBox(calculateFaceBox(response));
   };
 
-  const calculateFaceBox = (data) => {
-    const clarifaiFace = document.getElementById('imageInput');
-    const width = Number(clarifaiFace.width);
-    const height = Number(clarifaiFace.height);
-    return {
-      leftCol: data.left_col * width,
-      topRow: data.top_row * height,
-      rightCol: width - data.right_col * width,
-      bottomRow: height - data.bottom_row * height,
-    };
+  const calculateFaceBox = (response) => {
+    return response.outputs[0].data.regions.map((face) => {
+      const detectedFace = face.region_info.bounding_box;
+      const clarifaiFace = document.getElementById('imageInput');
+      const width = Number(clarifaiFace.width);
+      const height = Number(clarifaiFace.height);
+      return {
+        leftCol: detectedFace.left_col * width,
+        topRow: detectedFace.top_row * height,
+        rightCol: width - detectedFace.right_col * width,
+        bottomRow: height - detectedFace.bottom_row * height,
+      };
+    });
   };
-  const displayFaceBox = (box) => {
-    setBox(box);
+
+  const displayFaceBox = (boxes) => {
+    setBoxes(boxes);
   };
   return (
     <div className="App">
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
 
-      <FaceRecognition img={img} box={box} />
+      <FaceRecognition img={img} boxes={boxes} />
     </div>
   );
 };

@@ -8,7 +8,7 @@ const ImageLinkForm = ({ onInputChange, onSubmit }) => {
       <div className=" form">
         <input className="f4 pa2  w-70 center" type="tex" onChange={onInputChange} autoComplete="none" />
         <br />
-        <button style={{ 'font-size': '25px' }} onClick={onSubmit}>
+        <button style={{ fontSize: '25px' }} onClick={onSubmit}>
           Upload
         </button>
       </div>
